@@ -6,6 +6,7 @@ class IconTextButton extends StatelessWidget {
   final String icon;
   final String text;
   final Function onTap;
+
   const IconTextButton({
     super.key,
     this.icon = AssetsIcons.leftDoubleArrows,
@@ -24,7 +25,9 @@ class IconTextButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(icon),
-          const SizedBox(width: 8,),
+          const SizedBox(
+            width: 8,
+          ),
           Text(
             text,
             style: theme.textTheme.labelLarge?.copyWith(
