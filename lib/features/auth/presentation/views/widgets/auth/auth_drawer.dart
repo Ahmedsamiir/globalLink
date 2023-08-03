@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:globelink/core/constants/assets/assets_icons.dart';
-import 'package:globelink/features/auth/presentation/views/auth_view.dart';
+import 'package:globelink/features/home/presentation/views/home_view.dart';
 
-class HomeDrawer extends StatelessWidget {
+class AuthDrawer extends StatelessWidget {
   final Function(int) onItemTap;
-  const HomeDrawer({super.key, required this.onItemTap});
+  const AuthDrawer({super.key, required this.onItemTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +16,14 @@ class HomeDrawer extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           children: [
             const SizedBox(height: 20),
-            _buildListTile(
-                theme, AssetsIcons.homeBlue, "Home", () => onItemTap(0)),
+            _buildListTile(theme, AssetsIcons.homeBlue, "Home", () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomeView()));
+            }),
             _buildListTile(theme, AssetsIcons.policies, "View policies", () {}),
             _buildListTile(theme, AssetsIcons.quote, "Get a quote", () {}),
-            _buildListTile(
-                theme, AssetsIcons.claim, "Make a claim", () => onItemTap(2)),
-            _buildListTile(theme, AssetsIcons.myAccount, "My account", () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const AuthView()));
-            }),
+            _buildListTile(theme, AssetsIcons.claim, "Make a claim", () {}),
+            _buildListTile(theme, AssetsIcons.myAccount, "My account", () {}),
             const SizedBox(height: 20),
             const Divider(
               thickness: 2,
@@ -34,8 +32,7 @@ class HomeDrawer extends StatelessWidget {
               endIndent: 20,
             ),
             const SizedBox(height: 20),
-            _buildListTile(
-                theme, AssetsIcons.aboutUs, "About us", () => onItemTap(1)),
+            _buildListTile(theme, AssetsIcons.aboutUs, "About us", () {}),
             _buildListTile(theme, AssetsIcons.contactUs, "Contact us", () {}),
             _buildListTile(theme, AssetsIcons.website, "Visit website", () {}),
             const SizedBox(height: 20),

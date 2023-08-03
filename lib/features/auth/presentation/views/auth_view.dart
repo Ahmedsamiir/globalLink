@@ -4,8 +4,8 @@ import 'package:globelink/core/theme/colors/primary_colors.dart';
 import 'package:globelink/core/utils/models/screen_body.dart';
 import 'package:globelink/features/auth/presentation/views/widgets/another_pasword_reset/another_password_reset_body.dart';
 import 'package:globelink/features/auth/presentation/views/widgets/auth/auth_body.dart';
+import 'package:globelink/features/auth/presentation/views/widgets/auth/auth_drawer.dart';
 import 'package:globelink/features/auth/presentation/views/widgets/password_reset/password_reset_body.dart';
-import 'package:globelink/features/home/presentation/views/widgets/home/home_drawer.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
@@ -19,12 +19,7 @@ class _AuthViewState extends State<AuthView> {
 
   final PageController _pageController = PageController(initialPage: 0);
 
-  int _currentPageIndex = 0;
-
-  void _navigateToPage(int index, BuildContext context) {
-    setState(() {
-      _currentPageIndex = index;
-    });
+  void _navigateFromDrawerToPage(int index, BuildContext context) {
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -46,7 +41,9 @@ class _AuthViewState extends State<AuthView> {
   Widget build(BuildContext context) {
     List<ScreenBody> pages = [
       ScreenBody(
-        body:  AuthBody( navigateTo: (val) => navigateToPage(val, context)),
+        body: AuthBody(
+          navigateTo: (val) => navigateToPage(val, context),
+        ),
       ),
       ScreenBody(
         body: PasswordResetBody(
@@ -61,6 +58,7 @@ class _AuthViewState extends State<AuthView> {
     ];
 
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: const Color(0xff286EDA),
       appBar: AppBar(
         leading: Image.asset(AssetsIcons.homWhite),
@@ -104,38 +102,18 @@ class _AuthViewState extends State<AuthView> {
                   child: page.body,
                 ))
             .toList(),
-        onPageChanged: (index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
       ),
-      endDrawer: HomeDrawer(
-        onItemTap: (index) => _navigateToPage(index, context),
+      endDrawer: AuthDrawer(
+        onItemTap: (index) => _navigateFromDrawerToPage(index, context),
       ),
     );
   }
 
   void navigateToPage(int index, BuildContext context) {
-    setState(() {
-      _currentPageIndex = index;
-    });
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-
-    // void _navigateToPage(int index, BuildContext context) {
-    //   setState(() {
-    //     _currentPageIndex = index;
-    //   });
-    //   _pageController.animateToPage(
-    //     index,
-    //     duration: const Duration(milliseconds: 300),
-    //     curve: Curves.easeInOut,
-    //   );
-    //   Navigator.pop(context);
-    // }
   }
 }
